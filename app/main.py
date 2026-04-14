@@ -21,6 +21,11 @@ app.add_middleware(
 async def root():
     return {"message": "running fastapi server"}
 
+@app.get("/health")
+async def root():
+    return {"message": "running fastapi server 2"}
+
+
 @app.post("/send-email")
 async def send_in_background(data:EmailReq):
     try:
