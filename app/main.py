@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,HTTPException
 from fastapi_mail import MessageSchema,MessageType,FastMail
 from app.model import EmailReq
 from pydantic import NameEmail
@@ -12,13 +12,10 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["*"],
+    allow_headers=["*"], 
+    allow_credentials=True
 )
-
-
-
 
 @app.get("/")
 async def root():
@@ -42,5 +39,6 @@ async def send_in_background(data:EmailReq):
         # This schedules the email to send after the response is sent to the user
         await fm.send_message(message)
         return {"message": "Email has been queued"}
+
     except Exception as e:
-        return {"error": str(e)}
+        raise HTTPException(status_code=500, detail=str(e))
