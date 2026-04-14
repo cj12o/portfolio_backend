@@ -1,4 +1,4 @@
-name: Deploy FastAPI app on EC2
+name: Deploy Portfolio-backend on EC2
 
 on:
   push:

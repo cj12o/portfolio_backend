@@ -17,20 +17,14 @@ app.add_middleware(
     allow_credentials=True
 )
 
-@app.get("/")
-async def root():
-    return {"message": "running fastapi server"}
-
 @app.get("/health")
-async def root():
-    return {"message": "running fastapi server 2"}
+async def health():
+    return {"message": "fastapi server running"}
 
 
 @app.post("/send-email")
 async def send_in_background(data:EmailReq):
     try:
-        print(f"✅✅{conf.MAIL_USERNAME}  {conf.MAIL_PASSWORD}   {conf.MAIL_FROM}   {conf.MAIL_PORT}   {conf.MAIL_SERVER}")
-
         message = MessageSchema(
             subject=f"{data.name} FROM PORTFOLIO",
             recipients=[NameEmail(name=settings.MAIL_USERNAME,email=settings.MAIL)],
